@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, Heart, MessageCircle, Share2 } from "lucide-react";
 import carousel1 from "@/assets/carousel-1.png";
 import carousel2 from "@/assets/carousel-2.png";
 import carousel3 from "@/assets/carousel-3.png";
@@ -31,7 +31,15 @@ export const HelloPage = ({ onNavigateToDiary }: HelloPageProps) => {
     <div className="min-h-screen flex items-center justify-center p-4">
       <div className="w-full max-w-md">
         <Card className="overflow-hidden shadow-2xl border-2 border-border">
-          <div className="relative aspect-square">
+          {/* Instagram-style header */}
+          <div className="flex items-center gap-3 p-3 bg-background border-b border-border">
+            <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center border-2 border-primary">
+              <span className="text-primary-foreground font-bold text-lg">R</span>
+            </div>
+            <span className="font-semibold text-foreground">rayyan</span>
+          </div>
+
+          <div className="relative aspect-square bg-muted">
             <img
               src={slides[currentIndex].image}
               alt={slides[currentIndex].caption}
@@ -71,10 +79,23 @@ export const HelloPage = ({ onNavigateToDiary }: HelloPageProps) => {
               ))}
             </div>
           </div>
+
+          {/* Instagram-style action buttons */}
+          <div className="flex items-center gap-4 p-3 bg-background border-t border-border">
+            <button className="hover:opacity-70 transition-opacity" aria-label="Like">
+              <Heart className="w-6 h-6 text-foreground" />
+            </button>
+            <button className="hover:opacity-70 transition-opacity" aria-label="Comment">
+              <MessageCircle className="w-6 h-6 text-foreground" />
+            </button>
+            <button className="hover:opacity-70 transition-opacity" aria-label="Share">
+              <Share2 className="w-6 h-6 text-foreground" />
+            </button>
+          </div>
           
           {/* Instagram-style caption */}
-          <div className="p-4 bg-background">
-            <p className="text-foreground font-baloo text-lg">
+          <div className="px-3 pb-3 bg-background">
+            <p className="text-foreground font-baloo text-base">
               {slides[currentIndex].caption}
             </p>
           </div>
