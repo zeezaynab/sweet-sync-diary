@@ -10,17 +10,21 @@ interface HelloPageProps {
   onNavigateToDiary: () => void;
 }
 
-const images = [carousel1, carousel2, carousel3];
+const slides = [
+  { image: carousel1, caption: "I know you're mad" },
+  { image: carousel2, caption: "so I made this for you" },
+  { image: carousel3, caption: "please don't be mad" },
+];
 
 export const HelloPage = ({ onNavigateToDiary }: HelloPageProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const goToPrevious = () => {
-    setCurrentIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
+    setCurrentIndex((prev) => (prev === 0 ? slides.length - 1 : prev - 1));
   };
 
   const goToNext = () => {
-    setCurrentIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
+    setCurrentIndex((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
   };
 
   return (
@@ -29,8 +33,8 @@ export const HelloPage = ({ onNavigateToDiary }: HelloPageProps) => {
         <Card className="overflow-hidden shadow-2xl border-2 border-border">
           <div className="relative aspect-square">
             <img
-              src={images[currentIndex]}
-              alt={`Memory ${currentIndex + 1}`}
+              src={slides[currentIndex].image}
+              alt={slides[currentIndex].caption}
               className="w-full h-full object-cover"
             />
             
@@ -53,7 +57,7 @@ export const HelloPage = ({ onNavigateToDiary }: HelloPageProps) => {
 
             {/* Dots indicator */}
             <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
-              {images.map((_, idx) => (
+              {slides.map((_, idx) => (
                 <button
                   key={idx}
                   onClick={() => setCurrentIndex(idx)}
@@ -66,6 +70,13 @@ export const HelloPage = ({ onNavigateToDiary }: HelloPageProps) => {
                 />
               ))}
             </div>
+          </div>
+          
+          {/* Instagram-style caption */}
+          <div className="p-4 bg-background">
+            <p className="text-foreground font-baloo text-lg">
+              {slides[currentIndex].caption}
+            </p>
           </div>
         </Card>
 
