@@ -31,22 +31,11 @@ export const HelloPage = ({ onNavigateToDiary }: HelloPageProps) => {
   };
 
   const goToPrevious = () => {
-    triggerConfetti();
     setCurrentIndex((prev) => (prev === 0 ? slides.length - 1 : prev - 1));
   };
 
   const goToNext = () => {
-    triggerConfetti();
     setCurrentIndex((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
-  };
-
-  const handleLesgoClick = () => {
-    triggerConfetti();
-    onNavigateToDiary();
-  };
-
-  const handleImageClick = () => {
-    triggerConfetti();
   };
 
   return (
@@ -65,8 +54,7 @@ export const HelloPage = ({ onNavigateToDiary }: HelloPageProps) => {
             <img
               src={slides[currentIndex].image}
               alt={slides[currentIndex].caption}
-              className="w-full h-full object-cover cursor-pointer"
-              onClick={handleImageClick}
+              className="w-full h-full object-cover"
             />
             
             {/* Navigation arrows */}
@@ -108,10 +96,10 @@ export const HelloPage = ({ onNavigateToDiary }: HelloPageProps) => {
             <button className="hover:opacity-70 transition-opacity" aria-label="Like" onClick={triggerConfetti}>
               <Heart className="w-6 h-6 text-foreground" />
             </button>
-            <button className="hover:opacity-70 transition-opacity" aria-label="Comment" onClick={triggerConfetti}>
+            <button className="hover:opacity-70 transition-opacity" aria-label="Comment">
               <MessageCircle className="w-6 h-6 text-foreground" />
             </button>
-            <button className="hover:opacity-70 transition-opacity" aria-label="Share" onClick={triggerConfetti}>
+            <button className="hover:opacity-70 transition-opacity" aria-label="Share">
               <Share2 className="w-6 h-6 text-foreground" />
             </button>
           </div>
@@ -126,7 +114,7 @@ export const HelloPage = ({ onNavigateToDiary }: HelloPageProps) => {
 
         <div className="mt-6 text-center">
           <Button
-            onClick={handleLesgoClick}
+            onClick={onNavigateToDiary}
             size="lg"
             className="text-xl font-baloo px-12 py-6 shadow-lg hover:shadow-xl transition-all hover:scale-105"
           >
