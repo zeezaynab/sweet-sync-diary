@@ -92,6 +92,21 @@ export const DiaryPage = ({ onNavigateBack }: DiaryPageProps) => {
     setIsSubmitting(false);
   };
 
+  const handleDeleteNote = async (id: string) => {
+    const { error } = await supabase
+      .from('notes')
+      .delete()
+      .eq('id', id);
+
+    if (error) {
+      toast.error("Failed to delete note");
+      console.error(error);
+    } else {
+      toast.success("Note deleted");
+      setNotes((current) => current.filter((note) => note.id !== id));
+    }
+  };
+
   return (
     <div className="min-h-screen pb-24">
       {/* Header */}
@@ -121,7 +136,7 @@ export const DiaryPage = ({ onNavigateBack }: DiaryPageProps) => {
           </div>
         ) : (
           notes.map((note) => (
-            <NoteCard key={note.id} note={note} />
+            <NoteCard key={note.id} note={note} onDelete={handleDeleteNote} />
           ))
         )}
       </div>

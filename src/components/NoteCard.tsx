@@ -1,4 +1,6 @@
 import { format } from "date-fns";
+import { Trash2 } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 interface Note {
   id: string;
@@ -9,9 +11,10 @@ interface Note {
 
 interface NoteCardProps {
   note: Note;
+  onDelete: (id: string) => void;
 }
 
-export const NoteCard = ({ note }: NoteCardProps) => {
+export const NoteCard = ({ note, onDelete }: NoteCardProps) => {
   const isZainab = note.sender === "zainab";
   
   return (
@@ -33,13 +36,23 @@ export const NoteCard = ({ note }: NoteCardProps) => {
         />
         
         <div className="space-y-2">
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between gap-2">
             <span className="font-baloo font-semibold text-foreground capitalize">
               {note.sender}
             </span>
-            <span className="text-xs text-muted-foreground">
-              {format(new Date(note.created_at), "MMM d, h:mm a")}
-            </span>
+            <div className="flex items-center gap-2">
+              <span className="text-xs text-muted-foreground">
+                {format(new Date(note.created_at), "MMM d, h:mm a")}
+              </span>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="h-6 w-6 hover:bg-destructive/10 hover:text-destructive"
+                onClick={() => onDelete(note.id)}
+              >
+                <Trash2 className="h-3 w-3" />
+              </Button>
+            </div>
           </div>
           <p className="text-foreground whitespace-pre-wrap break-words leading-relaxed">
             {note.message}
