@@ -20,15 +20,7 @@ const slides = [
 export const HelloPage = ({ onNavigateToDiary }: HelloPageProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  const goToPrevious = () => {
-    setCurrentIndex((prev) => (prev === 0 ? slides.length - 1 : prev - 1));
-  };
-
-  const goToNext = () => {
-    setCurrentIndex((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
-  };
-
-  const handleLesgoClick = () => {
+  const triggerConfetti = () => {
     confetti({
       particleCount: 120,
       spread: 70,
@@ -36,7 +28,25 @@ export const HelloPage = ({ onNavigateToDiary }: HelloPageProps) => {
       colors: ["#FFD6E8", "#FFE7D1", "#D7E7FF", "#E5D9FF", "#FFF1A6"],
       shapes: ["circle", "square"],
     });
+  };
+
+  const goToPrevious = () => {
+    triggerConfetti();
+    setCurrentIndex((prev) => (prev === 0 ? slides.length - 1 : prev - 1));
+  };
+
+  const goToNext = () => {
+    triggerConfetti();
+    setCurrentIndex((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
+  };
+
+  const handleLesgoClick = () => {
+    triggerConfetti();
     onNavigateToDiary();
+  };
+
+  const handleImageClick = () => {
+    triggerConfetti();
   };
 
   return (
@@ -46,7 +56,7 @@ export const HelloPage = ({ onNavigateToDiary }: HelloPageProps) => {
           {/* Instagram-style header */}
           <div className="flex items-center gap-3 p-3 bg-background border-b border-border">
             <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center border-2 border-primary">
-              <span className="text-primary-foreground font-bold text-lg">R</span>
+              <span className="text-primary-foreground font-bold text-lg">P</span>
             </div>
             <span className="font-semibold text-foreground">pinkiepie</span>
           </div>
@@ -55,7 +65,8 @@ export const HelloPage = ({ onNavigateToDiary }: HelloPageProps) => {
             <img
               src={slides[currentIndex].image}
               alt={slides[currentIndex].caption}
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover cursor-pointer"
+              onClick={handleImageClick}
             />
             
             {/* Navigation arrows */}
@@ -94,13 +105,13 @@ export const HelloPage = ({ onNavigateToDiary }: HelloPageProps) => {
 
           {/* Instagram-style action buttons */}
           <div className="flex items-center gap-4 p-3 bg-background border-t border-border">
-            <button className="hover:opacity-70 transition-opacity" aria-label="Like">
+            <button className="hover:opacity-70 transition-opacity" aria-label="Like" onClick={triggerConfetti}>
               <Heart className="w-6 h-6 text-foreground" />
             </button>
-            <button className="hover:opacity-70 transition-opacity" aria-label="Comment">
+            <button className="hover:opacity-70 transition-opacity" aria-label="Comment" onClick={triggerConfetti}>
               <MessageCircle className="w-6 h-6 text-foreground" />
             </button>
-            <button className="hover:opacity-70 transition-opacity" aria-label="Share">
+            <button className="hover:opacity-70 transition-opacity" aria-label="Share" onClick={triggerConfetti}>
               <Share2 className="w-6 h-6 text-foreground" />
             </button>
           </div>
