@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { ChevronLeft, ChevronRight, Heart, MessageCircle, Share2 } from "lucide-react";
@@ -19,15 +19,36 @@ const slides = [
 
 export const HelloPage = ({ onNavigateToDiary }: HelloPageProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const confettiCanvasRef = useRef<HTMLCanvasElement>(null);
+
+  useEffect(() => {
+    // Set up confetti canvas to use full viewport
+    if (confettiCanvasRef.current) {
+      confettiCanvasRef.current.style.position = 'fixed';
+      confettiCanvasRef.current.style.top = '0';
+      confettiCanvasRef.current.style.left = '0';
+      confettiCanvasRef.current.style.width = '100%';
+      confettiCanvasRef.current.style.height = '100%';
+      confettiCanvasRef.current.style.pointerEvents = 'none';
+      confettiCanvasRef.current.style.zIndex = '9999';
+    }
+  }, []);
 
   const triggerConfetti = () => {
-    confetti({
-      particleCount: 120,
-      spread: 70,
-      origin: { y: 0.6 },
-      colors: ["#FFD6E8", "#FFE7D1", "#D7E7FF", "#E5D9FF", "#FFF1A6"],
-      shapes: ["circle", "square"],
-    });
+    if (confettiCanvasRef.current) {
+      const myConfetti = confetti.create(confettiCanvasRef.current, {
+        resize: true,
+        useWorker: true,
+      });
+      
+      myConfetti({
+        particleCount: 120,
+        spread: 70,
+        origin: { y: 0.6 },
+        colors: ["#FFD6E8", "#FFE7D1", "#D7E7FF", "#E5D9FF", "#FFF1A6"],
+        shapes: ["circle", "square"],
+      });
+    }
   };
 
   const goToPrevious = () => {
@@ -39,8 +60,12 @@ export const HelloPage = ({ onNavigateToDiary }: HelloPageProps) => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4">
-      <div className="w-full max-w-md">
+    <>
+      {/* Confetti canvas - rendered at page level */}
+      <canvas ref={confettiCanvasRef} />
+      
+      <div className="min-h-screen flex items-center justify-center p-4">
+        <div className="w-full max-w-md">
         <Card className="overflow-hidden shadow-2xl border-2 border-border">
           {/* Instagram-style header */}
           <div className="flex items-center gap-3 p-3 bg-background border-b border-border">
@@ -122,6 +147,7 @@ export const HelloPage = ({ onNavigateToDiary }: HelloPageProps) => {
           </Button>
         </div>
       </div>
-    </div>
+      </div>
+    </>
   );
 };
