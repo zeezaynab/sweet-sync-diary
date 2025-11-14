@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { ChevronLeft, ChevronRight, Heart, MessageCircle, Share2 } from "lucide-react";
+import confetti from "canvas-confetti";
 import carousel1 from "@/assets/carousel-1.png";
 import carousel2 from "@/assets/carousel-2.png";
 import carousel3 from "@/assets/carousel-3.png";
@@ -27,6 +28,17 @@ export const HelloPage = ({ onNavigateToDiary }: HelloPageProps) => {
     setCurrentIndex((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
   };
 
+  const handleLesgoClick = () => {
+    confetti({
+      particleCount: 120,
+      spread: 70,
+      origin: { y: 0.6 },
+      colors: ["#FFD6E8", "#FFE7D1", "#D7E7FF", "#E5D9FF", "#FFF1A6"],
+      shapes: ["circle", "square"],
+    });
+    onNavigateToDiary();
+  };
+
   return (
     <div className="min-h-screen flex items-center justify-center p-4">
       <div className="w-full max-w-md">
@@ -36,7 +48,7 @@ export const HelloPage = ({ onNavigateToDiary }: HelloPageProps) => {
             <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center border-2 border-primary">
               <span className="text-primary-foreground font-bold text-lg">R</span>
             </div>
-            <span className="font-semibold text-foreground">rayyan</span>
+            <span className="font-semibold text-foreground">pinkiepie</span>
           </div>
 
           <div className="relative aspect-square bg-muted">
@@ -103,11 +115,11 @@ export const HelloPage = ({ onNavigateToDiary }: HelloPageProps) => {
 
         <div className="mt-6 text-center">
           <Button
-            onClick={onNavigateToDiary}
+            onClick={handleLesgoClick}
             size="lg"
             className="text-xl font-baloo px-12 py-6 shadow-lg hover:shadow-xl transition-all hover:scale-105"
           >
-            hi ♡
+            lesgo
           </Button>
         </div>
       </div>

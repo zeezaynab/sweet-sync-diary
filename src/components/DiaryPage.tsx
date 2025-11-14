@@ -106,7 +106,7 @@ export const DiaryPage = ({ onNavigateBack }: DiaryPageProps) => {
             <ArrowLeft className="w-5 h-5" />
           </Button>
           <h1 className="text-2xl font-baloo font-semibold text-foreground">
-            Our Diary ♡
+            stick a note
           </h1>
         </div>
       </header>
